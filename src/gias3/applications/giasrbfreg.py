@@ -14,6 +14,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ===============================================================================
 """
 
+import os
 import argparse
 import configparser
 import copy
@@ -100,6 +101,7 @@ def register(source, target, init_rot, pts_only=False, out=None, view=False, **r
     # =============================================================#
     # view
     if view:
+        os.environ['ETS_TOOLKIT'] = 'qt4'
         try:
             from gias3.visualisation import fieldvi
             has_mayavi = True
@@ -248,17 +250,17 @@ def parse_config(fname):
     for _pass in range(1, n_passes + 1):
         sec = 'pass_{:d}'.format(_pass)
         pass_params = {
-            'basisType': cfg.get(sec, 'basis_type'),
-            'basisArgs': {
+            'basis_type': cfg.get(sec, 'basis_type'),
+            'basis_args': {
                 's': 1.0,
                 'scaling': cfg.getfloat(sec, 'basis_scaling')
             },
-            'distmode': cfg.get(sec, 'dist_mode'),
+            'dist_mode': cfg.get(sec, 'dist_mode'),
             'xtol': cfg.getfloat(sec, 'xtol'),
-            'maxIt': cfg.getint(sec, 'max_it'),
-            'maxKnots': cfg.getint(sec, 'max_knots'),
-            'minKnotDist': cfg.getfloat(sec, 'min_knot_dist'),
-            'maxKnotsPerIt': cfg.getint(sec, 'max_knots_per_it'),
+            'max_it': cfg.getint(sec, 'max_it'),
+            'max_knots': cfg.getint(sec, 'max_knots'),
+            'min_knot_dist': cfg.getfloat(sec, 'min_knot_dist'),
+            'max_knots_per_it': cfg.getint(sec, 'max_knots_per_it'),
         }
         params.append(pass_params)
 
